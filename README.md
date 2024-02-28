@@ -54,7 +54,7 @@ dotnet sln Economix.sln add test/Economix.Tests/Economix.Tests.csproj -s tests
 
 ## Incluir Primeiro Teste
 ```code
-public class MinimalIntegrationTests
+public class HelloWorldIntegrationTests
 {
     [Fact]
     public void HelloWorld_Result_Is_HelloWorld()
@@ -69,6 +69,14 @@ public class MinimalIntegrationTests
     }
 }
 ```
+## Dar visibilidade a class Program de Api em Test
+Adicionar em Api.csproj
+```code
+	<ItemGroup>
+		<InternalsVisibleTo Include="Economix.Tests"/>
+	</ItemGroup>
+```
+* Executar o Run de Tests
 
 ```sh
 dotnet dev-certs https --trust
