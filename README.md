@@ -1,6 +1,7 @@
 # integration-test-minimal-api
-## Criar gitIgnore
+## Criar solution
 ```sh
+dotnet new sln -n Economix
 dotnet new gitignore
 ```
 
@@ -40,6 +41,15 @@ dotnet tests
 ```sh
 dotnet add package Microsoft.AspNetCore.Mvc.Testing
 dotnet add package Microsoft.AspNetCore.TestHost
+dotnet tests
+```
+
+## Incluir Projetos em Solution
+
+```sh
+cd ../
+dotnet sln Economix.sln add src/Economix.Api/Economix.Api.csproj -s src
+dotnet sln Economix.sln add test/Economix.Tests/Economix.Tests.csproj -s tests
 ```
 
 ## Incluir Primeiro Teste
