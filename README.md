@@ -16,33 +16,24 @@ Nossa intenção é demonstrar como realizar um teste de integração com todos 
 
 ## Arquivo Posicional
 ### Header
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+| Numero | Posicao | Picture | Conteudo do Campo | Especificações |
+| ------ | ------ | ------ | ------ | ------ |
+| 1 | 001-007 | 9(007) | Controle de Header | Preencher com Zeros("0000000") |
+| 2 | [plugins/github/README.md][PlGh] |
 ### Body
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+| Numero | Posicao | Picture | Conteudo do Campo | Especificações |
+| ------ | ------ | ------ | ------ | ------ |
+| 1 | 001-007 | 9(007) | Controle de Body | --- |
+| 2 | [plugins/github/README.md][PlGh] |
+| 3 | [plugins/googledrive/README.md][PlGd] |
+| 4 | [plugins/onedrive/README.md][PlOd] |
+| 5 | [plugins/medium/README.md][PlMe] |
+| 6 | [plugins/googleanalytics/README.md][PlGa] |
 ### Footer
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
-
+| Numero | Posicao | Picture | Conteudo do Campo | Especificações |
+| ------ | ------ | ------ | ------ | ------ |
+| 1 | 001-007 | 9(007) | Controle de Footer | Preencher com Noves("9999999") |
+| 2 | [plugins/github/README.md][PlGh] |
 
 ## Criar solution
 ```sh
