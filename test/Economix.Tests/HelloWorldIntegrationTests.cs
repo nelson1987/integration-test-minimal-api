@@ -18,10 +18,12 @@ public class HelloWorldIntegrationTests
     {
         var response = await httpClient.GetAsync("/");
         response.EnsureSuccessStatusCode();
-        var result = await response.Content.ReadAsStringAsync();
-
         Assert.Equal((int)HttpStatusCode.OK, (int)response.StatusCode);
-        Assert.Equal("\"Hello World!_GET\"", result);
+
+        var resultJson = await response.Content.ReadAsStringAsync();
+        Mensagem result = System.Text.Json.JsonSerializer.Deserialize<Mensagem>(resultJson, 
+            new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web))!;
+        Assert.Equal("Hello World!_GET", result.Message);
     }
 
     [Fact]
@@ -30,11 +32,12 @@ public class HelloWorldIntegrationTests
         var request = new StringContent("", Encoding.UTF8, "application/json");
         var response = await httpClient.PostAsync("/", request);
         response.EnsureSuccessStatusCode();
-
-        var result = await response.Content.ReadAsStringAsync();
-
         Assert.Equal((int)HttpStatusCode.Created, (int)response.StatusCode);
-        Assert.Equal("\"Hello World!_POST\"", result);
+
+        var resultJson = await response.Content.ReadAsStringAsync();
+        Mensagem result = System.Text.Json.JsonSerializer.Deserialize<Mensagem>(resultJson,
+            new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web))!;
+        Assert.Equal("Hello World!_POST", result.Message);
     }
 
     [Fact]
@@ -43,11 +46,12 @@ public class HelloWorldIntegrationTests
         var request = new StringContent("", Encoding.UTF8, "application/json");
         var response = await httpClient.PutAsync("/", request);
         response.EnsureSuccessStatusCode();
-
-        var result = await response.Content.ReadAsStringAsync();
-
         Assert.Equal((int)HttpStatusCode.Accepted, (int)response.StatusCode);
-        Assert.Equal("\"Hello World!_PUT\"", result);
+
+        var resultJson = await response.Content.ReadAsStringAsync();
+        Mensagem result = System.Text.Json.JsonSerializer.Deserialize<Mensagem>(resultJson,
+            new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web))!;
+        Assert.Equal("Hello World!_PUT", result.Message);
     }
 
     [Fact]
