@@ -6,6 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 	<ItemGroup>
-		<InternalsVisibleTo Include="Economix.Tests"/>
+		<InternalsVisibleTo Include="Economix.Tests" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Economix.Core\Economix.Core.csproj" />
 	</ItemGroup>
 </Project>

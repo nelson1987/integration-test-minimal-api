@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Economix.Core\Economix.Core.csproj" />
     <ProjectReference Include="..\..\src\Economix.Api\Economix.Api.csproj" />
   </ItemGroup>
 

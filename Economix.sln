@@ -5,19 +5,18 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4E0FD89C-E1B0-4AA0-8314-73F7AB61BC17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Economix.Api", "src\Economix.Api\Economix.Api.csproj", "{86591756-5C91-40F9-AB3A-CE310A5CF62F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Economix.Api", "src\Economix.Api\Economix.Api.csproj", "{86591756-5C91-40F9-AB3A-CE310A5CF62F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2B51883F-A079-4036-BC17-2CC65BCB4E55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Economix.Tests", "test\Economix.Tests\Economix.Tests.csproj", "{3F6C1542-A219-4083-8904-FD6C5F6F7696}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Economix.Tests", "test\Economix.Tests\Economix.Tests.csproj", "{3F6C1542-A219-4083-8904-FD6C5F6F7696}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Economix.Core", "Economix.Core\Economix.Core.csproj", "{A64F41A2-4DCE-476D-83C6-DAB02A03ED44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{86591756-5C91-40F9-AB3A-CE310A5CF62F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -28,9 +27,20 @@ Global
 		{3F6C1542-A219-4083-8904-FD6C5F6F7696}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F6C1542-A219-4083-8904-FD6C5F6F7696}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F6C1542-A219-4083-8904-FD6C5F6F7696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A64F41A2-4DCE-476D-83C6-DAB02A03ED44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A64F41A2-4DCE-476D-83C6-DAB02A03ED44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A64F41A2-4DCE-476D-83C6-DAB02A03ED44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A64F41A2-4DCE-476D-83C6-DAB02A03ED44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{86591756-5C91-40F9-AB3A-CE310A5CF62F} = {4E0FD89C-E1B0-4AA0-8314-73F7AB61BC17}
 		{3F6C1542-A219-4083-8904-FD6C5F6F7696} = {2B51883F-A079-4036-BC17-2CC65BCB4E55}
+		{A64F41A2-4DCE-476D-83C6-DAB02A03ED44} = {4E0FD89C-E1B0-4AA0-8314-73F7AB61BC17}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31DB72D0-B4DC-4576-960C-3C3C879F5523}
 	EndGlobalSection
 EndGlobal

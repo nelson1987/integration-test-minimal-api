@@ -1,5 +1,18 @@
 # integration-test-minimal-api
 Utilizarei nesse projeto 4 das integrações que mais acontecem no SFN: Banco de dados, spis externas, mensageria e arquivo posicional .txt
+## História
+No FishBank a cada 4 horas um robô envia uma requisição GET para o endpoint "/", para verificar se nesse momento está sendo executado o processo de compensação de transferências.
+Se ele receber uma resposta de que no momento não há processo sendo executado. O robô enviará uma requisição POST para o endpoint "/", contendo o dia da próxima compensação, e o usuário responsável pela execução.
+
+Compensação: A Compensação é um processo que consiste em ler todos os arquivos nomeados com o prefixo, que foi enviado. Em seguida persistir os dados das transferências compensadas. Para que na sequência seja enviada uma requisição para uma API Externa que é a comunicação com a autorizadora de valores. Para por fim publicar em uma fila/tópico para enviar para outra área do FishBank. Que após realizar todas as validações publicará numa outra fila/tópico que será consumida pela nossa área, e atualizaremos os dados da transação no banco já persistido.
+
+Lembrando utilizaremos:
+* Um servidor de mensageria(Kafka ou RabbitMq)
+* Um banco NoSql, para ser o banco de leitura
+* Um banco Relacional, para ser o banco de escrita
+* E um servidor HTTP para testar as rotas da API Externa.
+
+Nossa intenção é demonstrar como realizar um teste de integração com todos esses processos
 
 ## Criar solution
 ```sh

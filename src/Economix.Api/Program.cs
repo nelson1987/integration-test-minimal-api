@@ -7,5 +7,3 @@ app.MapPut("/", () => Results.Accepted("/", new Mensagem("Hello World!_PUT")));
 app.MapDelete("/", () => Results.NoContent());
 
 app.Run();
-
-public record Mensagem(string? Message);
