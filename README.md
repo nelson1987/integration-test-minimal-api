@@ -1,4 +1,6 @@
 # integration-test-minimal-api
+Utilizarei nesse projeto 4 das integrações que mais acontecem no SFN: Banco de dados, spis externas, mensageria e arquivo posicional .txt
+
 ## Criar solution
 ```sh
 dotnet new sln -n Economix
