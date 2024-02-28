@@ -38,7 +38,26 @@ dotnet tests
 
 ## Incluir frameworks em Tests
 ```sh
+dotnet add package Microsoft.AspNetCore.Mvc.Testing
+dotnet add package Microsoft.AspNetCore.TestHost
+```
 
+## Incluir Primeiro Teste
+```code
+public class MinimalIntegrationTests
+{
+    [Fact]
+    public void HelloWorld_Result_Is_HelloWorld()
+    {
+        var webAppFactory = new WebApplicationFactory<Program>();
+        var httpClient = webAppFactory.CreateDefaultClient();
+
+        var response = await httpClient.GetAsync("/");
+        var result = await response.Content.ReadAsStringAsync();
+
+        Assert.Equal("Hello World!", result);
+    }
+}
 ```
 
 ```sh
