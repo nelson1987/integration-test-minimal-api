@@ -5,26 +5,12 @@ public class LeituraArquivoIntegrationTests
     [Fact]
     public void HelloWorld_GET_Result_Is_Ok_With_HelloWorld()
     {
+        Leitura leitura = new Leitura();
         var file = "2024028.TXT";
         Assert.Equal("2024028.TXT", file);
 
-        var path = $"./Files/{file}";
-        var fullPath = Path.GetFullPath(path);
-
-        var lines = File.ReadAllLines(fullPath);
-        int index = 0;
-        foreach (var line in lines)
-        {
-            if (index == lines.Length - 1)
-            {
-                break;
-            }
-            if (index > 0)
-            {
-                ArquivoLeitura arquivo = ArquivoLeituraBuilder.Create(line, file);
-            }
-            index++;
-        }
+        var arquivos = leitura.Ler(file);
+        Assert.True(arquivos!.Any());
     }
 }
 public class ArquivoLeituraUnitTests

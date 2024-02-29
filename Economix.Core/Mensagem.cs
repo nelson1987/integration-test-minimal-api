@@ -17,6 +17,32 @@ public static class ArquivoLeituraBuilder
         };
     }
 }
+public class Leitura
+{
+    public List<ArquivoLeitura>? Ler(string file)
+    {
+        var path = $"./Files/{file}";
+        var fullPath = Path.GetFullPath(path);
+
+        var lines = File.ReadAllLines(fullPath);
+        List<ArquivoLeitura> arquivo = new List<ArquivoLeitura>();
+        int index = 0;
+        foreach (var line in lines)
+        {
+            if (index == lines.Length - 1)
+            {
+                break;
+            }
+            if (index > 0)
+            {
+                arquivo.Add(ArquivoLeituraBuilder.Create(line, file));
+            }
+            index++;
+        }
+
+        return arquivo;
+    }
+}
 public class ArquivoLeitura
 {
     public required string FileName { get; set; }
