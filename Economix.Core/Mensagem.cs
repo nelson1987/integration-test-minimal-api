@@ -6,7 +6,8 @@ public static class Dependencies
     public static void AddCore(this IServiceCollection service) => service
         .AddScoped<IUsuarioRepository, UsuarioRepository>()
         .AddScoped<ITransferenciaRepository, TransferenciaRepository>()
-        .AddScoped<ITesourariaEventProducer, TesourariaEventProducer>();
+        .AddScoped<ITesourariaEventProducer, TesourariaEventProducer>()
+        .AddScoped<IAutorizadorService, AutorizadorService>();
 
 }
 public record Mensagem(string? Message);
@@ -64,6 +65,19 @@ public class Usuario
     public int Id { get; set; }
     public int Tipo { get; set; }
 }
+
+public interface IAutorizadorService 
+{
+    bool TransferenciaAutorizada(int idDebitante, decimal valor);
+}
+public class AutorizadorService : IAutorizadorService
+{
+    public bool TransferenciaAutorizada(int idDebitante, decimal valor)
+    {
+        return true;
+    }
+}
+
 public interface ITesourariaEventProducer
 {
     void SendTransferencia(InclusaoTranferenciaEvent @event);
