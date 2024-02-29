@@ -21,7 +21,7 @@ public class HelloWorldIntegrationTests
         Assert.Equal((int)HttpStatusCode.OK, (int)response.StatusCode);
 
         var resultJson = await response.Content.ReadAsStringAsync();
-        Mensagem result = System.Text.Json.JsonSerializer.Deserialize<Mensagem>(resultJson, 
+        Mensagem result = System.Text.Json.JsonSerializer.Deserialize<Mensagem>(resultJson,
             new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web))!;
         Assert.Equal("Hello World!_GET", result.Message);
     }
@@ -35,9 +35,10 @@ public class HelloWorldIntegrationTests
         Assert.Equal((int)HttpStatusCode.Created, (int)response.StatusCode);
 
         var resultJson = await response.Content.ReadAsStringAsync();
-        Mensagem result = System.Text.Json.JsonSerializer.Deserialize<Mensagem>(resultJson,
+        List<ArquivoLeitura> result = System.Text.Json.JsonSerializer.Deserialize<List<ArquivoLeitura>>(resultJson,
             new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web))!;
-        Assert.Equal("Hello World!_POST", result.Message);
+        //Assert.Equal("Hello World!_POST", result.Message); 
+        Assert.Equal(2, result.Count);
     }
 
     [Fact]

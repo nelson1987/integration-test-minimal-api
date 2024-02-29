@@ -21,26 +21,24 @@ public class LeituraArquivoIntegrationTests
             }
             if (index > 0)
             {
-                Console.WriteLine(line[0..7]);
-                Console.WriteLine(line[7..9]);
-                Console.WriteLine(line[9..14]);
-                //14 16
-                //16 21
-                //21 31
-
-
-
+                ArquivoLeitura arquivo = ArquivoLeituraBuilder.Create(line, file);
             }
             index++;
         }
     }
 }
-public class ArquivoLeitura
+public class ArquivoLeituraUnitTests
 {
-    private readonly string _line;
-    public ArquivoLeitura(string line)
+    [Theory]
+    [InlineData("000000101000010200011000000000001", "20190123.txt")]
+    public void HelloWorld_GET_Result_Is_Ok_With_HelloWorld(string? line, string? file)
     {
-        Console.WriteLine(line);
-        _line = line;
+        ArquivoLeitura arquivo = ArquivoLeituraBuilder.Create(line!, file!);
+        Assert.Equal("20190123.txt", arquivo.FileName);
+        Assert.Equal(1, arquivo.TipoCreditante);
+        Assert.Equal(1, arquivo.CreditanteId);
+        Assert.Equal(2, arquivo.TipoDebitante);
+        Assert.Equal(11, arquivo.DebitanteId);
+        Assert.Equal(0.01M, arquivo.Valor);
     }
 }
