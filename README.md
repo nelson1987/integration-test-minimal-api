@@ -117,3 +117,6 @@ Adicionar em Api.csproj
 ```sh
 dotnet dev-certs https --trust
 ```
+
+### bibliografia
+https://macoratti.net/21/10/aspn6_estrminapi1.htm

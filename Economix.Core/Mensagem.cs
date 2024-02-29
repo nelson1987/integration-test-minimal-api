@@ -38,13 +38,11 @@ public class Leitura
         foreach (var line in lines)
         {
             if (index == lines.Length - 1)
-            {
                 break;
-            }
+            
             if (index > 0)
-            {
                 arquivo.Add(ArquivoLeituraBuilder.Create(line, file));
-            }
+            
             index++;
         }
 

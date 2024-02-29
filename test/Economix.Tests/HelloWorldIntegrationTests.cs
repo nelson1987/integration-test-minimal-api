@@ -1,22 +1,23 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
+using System.Net.Http.Json;
 using System.Text;
 
 namespace Economix.Tests;
 
 public class HelloWorldIntegrationTests
 {
-    public readonly HttpClient httpClient;
+    public readonly HttpClient _httpClient;
     public HelloWorldIntegrationTests()
     {
         var webAppFactory = new WebApplicationFactory<Program>();
-        httpClient = webAppFactory.CreateDefaultClient();
+        _httpClient = webAppFactory.CreateDefaultClient();
     }
 
     [Fact]
     public async Task HelloWorld_GET_Result_Is_Ok_With_HelloWorld()
     {
-        var response = await httpClient.GetAsync("/");
+        var response = await _httpClient.GetAsync("/");
         response.EnsureSuccessStatusCode();
         Assert.Equal((int)HttpStatusCode.OK, (int)response.StatusCode);
 
@@ -30,7 +31,7 @@ public class HelloWorldIntegrationTests
     public async Task HelloWorld_POST_Result_Is_Created_With_HelloWorld()
     {
         var request = new StringContent("", Encoding.UTF8, "application/json");
-        var response = await httpClient.PostAsync("/", request);
+        var response = await _httpClient.PostAsJsonAsync("/", request);
         response.EnsureSuccessStatusCode();
         Assert.Equal((int)HttpStatusCode.Created, (int)response.StatusCode);
 
@@ -45,7 +46,7 @@ public class HelloWorldIntegrationTests
     public async Task HelloWorld_PUT_Result_Is_Accepted_With_HelloWorld()
     {
         var request = new StringContent("", Encoding.UTF8, "application/json");
-        var response = await httpClient.PutAsync("/", request);
+        var response = await _httpClient.PutAsJsonAsync("/", request);
         response.EnsureSuccessStatusCode();
         Assert.Equal((int)HttpStatusCode.Accepted, (int)response.StatusCode);
 
@@ -58,7 +59,7 @@ public class HelloWorldIntegrationTests
     [Fact]
     public async Task HelloWorld_DELETE_Result_Is_NoContent()
     {
-        var response = await httpClient.DeleteAsync("/");
+        var response = await _httpClient.DeleteAsync("/");
         response.EnsureSuccessStatusCode();
 
         Assert.Equal((int)HttpStatusCode.NoContent, (int)response.StatusCode);
