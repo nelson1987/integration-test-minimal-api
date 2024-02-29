@@ -1,6 +1,14 @@
-﻿namespace Economix.Core;
+﻿using Microsoft.Extensions.DependencyInjection;
 
+namespace Economix.Core;
+public static class Dependencies
+{
+    public static void AddCore(this IServiceCollection service) => service
+        .AddScoped<IUsuarioRepository, UsuarioRepository>()
+        .AddScoped<ITransferenciaRepository, TransferenciaRepository>()
+        .AddScoped<ITesourariaEventProducer, TesourariaEventProducer>();
 
+}
 public record Mensagem(string? Message);
 public static class ArquivoLeituraBuilder
 {
@@ -58,6 +66,28 @@ public class Usuario
     public int Id { get; set; }
     public int Tipo { get; set; }
 }
+public interface ITesourariaEventProducer
+{
+    void SendTransferencia(InclusaoTranferenciaEvent @event);
+}
+public class TesourariaEventProducer : ITesourariaEventProducer
+{
+    public void SendTransferencia(InclusaoTranferenciaEvent @event)
+    {
+    }
+}
+
+public interface ITransferenciaRepository
+{
+    void Insert(Transferencia transferencia);
+}
+public class TransferenciaRepository : ITransferenciaRepository
+{
+    public void Insert(Transferencia transferencia)
+    {
+    }
+}
+
 public interface IUsuarioRepository
 {
     Usuario? GetFilter(int tipoUsuario, int usuarioId);
@@ -69,3 +99,11 @@ public class UsuarioRepository : IUsuarioRepository
         return new Usuario() { Id = usuarioId, Tipo = tipoUsuario };
     }
 }
+
+public class Transferencia
+{
+    public required Usuario debitante { get; set; }
+    public required Usuario creditante { get; set; }
+    public decimal valor { get; set; }
+}
+public record InclusaoTranferenciaEvent(Transferencia Transferencia);
