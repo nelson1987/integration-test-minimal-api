@@ -52,3 +52,20 @@ public class ArquivoLeitura
     public int DebitanteId { get; set; }
     public decimal Valor { get; set; }
 }
+
+public class Usuario
+{
+    public int Id { get; set; }
+    public int Tipo { get; set; }
+}
+public interface IUsuarioRepository
+{
+    Usuario? GetFilter(int tipoUsuario, int usuarioId);
+}
+public class UsuarioRepository : IUsuarioRepository
+{
+    public Usuario? GetFilter(int tipoUsuario, int usuarioId)
+    {
+        return new Usuario() { Id = usuarioId, Tipo = tipoUsuario };
+    }
+}
