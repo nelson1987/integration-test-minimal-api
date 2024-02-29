@@ -1,15 +1,74 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentResults;
+using Microsoft.Extensions.DependencyInjection;
+using static Economix.Core.LeituraArquivosHandler;
 
 namespace Economix.Core;
 public static class Dependencies
 {
     public static void AddCore(this IServiceCollection service) => service
+        .AddScoped<ILeituraArquivosHandler, LeituraArquivosHandler>()
         .AddScoped<IUsuarioRepository, UsuarioRepository>()
         .AddScoped<ITransferenciaRepository, TransferenciaRepository>()
         .AddScoped<ITesourariaEventProducer, TesourariaEventProducer>()
         .AddScoped<IAutorizadorService, AutorizadorService>();
 
 }
+
+public interface ILeituraArquivosHandler
+{
+    Result Handle();
+}
+public class LeituraArquivosHandler : ILeituraArquivosHandler
+{
+    private readonly IUsuarioRepository _usuarioRepository;
+    private readonly ITransferenciaRepository _transferenciaRepository;
+    private readonly ITesourariaEventProducer _eventClient;
+    private readonly IAutorizadorService _autorizador;
+
+    public LeituraArquivosHandler(IUsuarioRepository usuarioRepository,
+        ITransferenciaRepository transferenciaRepository,
+        ITesourariaEventProducer eventClient,
+        IAutorizadorService autorizador)
+    {
+        _usuarioRepository = usuarioRepository;
+        _transferenciaRepository = transferenciaRepository;
+        _eventClient = eventClient;
+        _autorizador = autorizador;
+    }
+    public Result Handle()
+    {
+        Leitura leitura = new Leitura();
+        var list = leitura.Ler("2024028.TXT");
+        foreach (var arquivo in list!)
+        {
+            //Valor
+            if (arquivo.Valor == 0) return Result.Fail("Valor não pode ser zero");
+            //Debitante
+            var debitante = _usuarioRepository.GetFilter(arquivo.TipoCreditante, arquivo.CreditanteId);
+            if (debitante == null) return Result.Fail("Debitante não encontrado");
+            //Creditante
+            var creditante = _usuarioRepository.GetFilter(arquivo.TipoCreditante, arquivo.CreditanteId);
+            if (creditante == null) return Result.Fail("Creditante não encontrado");
+
+            //Autorizador Externo
+            bool autorizada = _autorizador.TransferenciaAutorizada(arquivo.CreditanteId, arquivo.Valor);
+            if (!autorizada) return Result.Fail("Transferência não autorizada");
+            //Inserção de Transferência in MongoDb
+            var transferencia = new Transferencia()
+            {
+                creditante = creditante,
+                debitante = debitante,
+                valor = arquivo.Valor
+            };
+            _transferenciaRepository.Insert(transferencia);
+            //Envio para Mensageria
+            _eventClient.SendTransferencia(new InclusaoTranferenciaEvent(transferencia));
+        }
+        return Result.Ok();
+    }
+}
+
+
 public record Mensagem(string? Message);
 public static class ArquivoLeituraBuilder
 {
@@ -40,10 +99,10 @@ public class Leitura
         {
             if (index == lines.Length - 1)
                 break;
-            
+
             if (index > 0)
                 arquivo.Add(ArquivoLeituraBuilder.Create(line, file));
-            
+
             index++;
         }
 
@@ -66,7 +125,7 @@ public class Usuario
     public int Tipo { get; set; }
 }
 
-public interface IAutorizadorService 
+public interface IAutorizadorService
 {
     bool TransferenciaAutorizada(int idDebitante, decimal valor);
 }

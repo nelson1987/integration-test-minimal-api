@@ -36,10 +36,12 @@ public class HelloWorldIntegrationTests
         Assert.Equal((int)HttpStatusCode.Created, (int)response.StatusCode);
 
         var resultJson = await response.Content.ReadAsStringAsync();
-        List<ArquivoLeitura> result = System.Text.Json.JsonSerializer.Deserialize<List<ArquivoLeitura>>(resultJson,
+        //List<ArquivoLeitura> result = System.Text.Json.JsonSerializer.Deserialize<List<ArquivoLeitura>>(resultJson,
+        //  new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web))!;
+        //Assert.Equal(2, result.Count);
+        Mensagem result = System.Text.Json.JsonSerializer.Deserialize<Mensagem>(resultJson,
             new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web))!;
-        //Assert.Equal("Hello World!_POST", result.Message); 
-        Assert.Equal(2, result.Count);
+        Assert.Equal("Hello World!_POST", result.Message); 
     }
 
     [Fact]
