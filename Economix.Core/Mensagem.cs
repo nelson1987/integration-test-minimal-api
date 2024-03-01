@@ -11,7 +11,6 @@ public static class Dependencies
         .AddScoped<ITransferenciaRepository, TransferenciaRepository>()
         .AddScoped<ITesourariaEventProducer, TesourariaEventProducer>()
         .AddScoped<IAutorizadorService, AutorizadorService>();
-
 }
 
 public interface ILeituraArquivosHandler
@@ -49,7 +48,6 @@ public class LeituraArquivosHandler : ILeituraArquivosHandler
             //Creditante
             var creditante = _usuarioRepository.GetFilter(arquivo.TipoCreditante, arquivo.CreditanteId);
             if (creditante == null) return Result.Fail("Creditante não encontrado");
-
             //Autorizador Externo
             bool autorizada = _autorizador.TransferenciaAutorizada(arquivo.CreditanteId, arquivo.Valor);
             if (!autorizada) return Result.Fail("Transferência não autorizada");
@@ -161,7 +159,9 @@ public class TransferenciaRepository : ITransferenciaRepository
 
 public interface IUsuarioRepository
 {
+    void DeleteAll();
     Usuario? GetFilter(int tipoUsuario, int usuarioId);
+    void Insert(Usuario usuario);
 }
 public class UsuarioRepository : IUsuarioRepository
 {
@@ -173,13 +173,23 @@ public class UsuarioRepository : IUsuarioRepository
         var database = mongoClient.GetDatabase("Economix");
         _ticketsCollection = database.GetCollection<Usuario>(nameof(Usuario));
     }
+
     public Usuario? GetFilter(int tipoUsuario, int usuarioId)
     {
-
         var collection = _ticketsCollection.Find(x => x.Id == usuarioId && x.Tipo == tipoUsuario);
         return collection.FirstOrDefault();
 
         //return new Usuario() { Id = usuarioId, Tipo = tipoUsuario };
+    }
+
+    public void Insert(Usuario usuario)
+    {
+        _ticketsCollection.InsertOne(usuario);
+    }
+
+    public void DeleteAll()
+    {
+        _ticketsCollection.DeleteMany(x => x.Id > 0);
     }
 }
 
