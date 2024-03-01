@@ -1,6 +1,6 @@
 ﻿using FluentResults;
 using Microsoft.Extensions.DependencyInjection;
-using static Economix.Core.LeituraArquivosHandler;
+using MongoDB.Driver;
 
 namespace Economix.Core;
 public static class Dependencies
@@ -165,9 +165,21 @@ public interface IUsuarioRepository
 }
 public class UsuarioRepository : IUsuarioRepository
 {
+    private readonly IMongoCollection<Usuario> _ticketsCollection;
+    //TODO: Implementar UnitOfWork
+    public UsuarioRepository()
+    {
+        var mongoClient = new MongoClient("mongodb://root:example@localhost:27017/");
+        var database = mongoClient.GetDatabase("Economix");
+        _ticketsCollection = database.GetCollection<Usuario>(nameof(Usuario));
+    }
     public Usuario? GetFilter(int tipoUsuario, int usuarioId)
     {
-        return new Usuario() { Id = usuarioId, Tipo = tipoUsuario };
+
+        var collection = _ticketsCollection.Find(x => x.Id == usuarioId && x.Tipo == tipoUsuario);
+        return collection.FirstOrDefault();
+
+        //return new Usuario() { Id = usuarioId, Tipo = tipoUsuario };
     }
 }
 
